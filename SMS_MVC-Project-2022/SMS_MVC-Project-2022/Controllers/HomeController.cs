@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SMS_MVC_Project_2022.Data.Repository;
 using SMS_MVC_Project_2022.Models;
 using System;
 using System.Collections.Generic;
@@ -13,14 +14,18 @@ namespace SMS_MVC_Project_2022.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IStudentRepository _studentRepo;
+
+        public HomeController(ILogger<HomeController> logger, IStudentRepository studentrepo)
         {
             _logger = logger;
+            _studentRepo = studentrepo;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var result=_studentRepo.GetAllStudent();
+            return View(result);
         }
 
         public IActionResult Privacy()

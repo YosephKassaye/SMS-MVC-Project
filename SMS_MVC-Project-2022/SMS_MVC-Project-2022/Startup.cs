@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SMS_MVC_Project_2022.Data;
+using SMS_MVC_Project_2022.Data.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +25,11 @@ namespace SMS_MVC_Project_2022
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<SMSDataContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("Studentdb")));
+
+            services.AddScoped<IStudentRepository, StudentRepository>();
+
             services.AddControllersWithViews();
         }
 
